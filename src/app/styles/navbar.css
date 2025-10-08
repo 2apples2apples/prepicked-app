@@ -1,0 +1,67 @@
+/* ===== Navbar Container ===== */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* space out logo/title on left and buttons on right */
+  background-color: #000; /* black background for your PrePicks theme */
+  color: white;
+  height: 64px;
+  padding: 0 24px;
+  border-bottom: 2px solid #6c47ff; /* subtle accent line */
+  position: fixed; /* stays at top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* ===== Left Side (Logo + Title) ===== */
+nav > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Logo styling */
+.nav-prepicks-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Title text */
+.title-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+/* ===== Right Side (Buttons / User) ===== */
+.sign-up-button,
+.sign-in-button {
+  background-color: #6c47ff;
+  color: #fff;
+  border: none;
+  border-radius: 9999px; /* full pill shape */
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-left: 8px;
+}
+
+.sign-up-button:hover {
+  background-color: #8b6bff;
+  transform: scale(1.05);
+}
+
+/* Optional: make buttons align right */
+.SignedOut,
+.SignedIn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
