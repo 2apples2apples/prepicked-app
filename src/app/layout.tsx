@@ -1,8 +1,8 @@
+import { ClerkProvider } from "@clerk/nextjs"
 import { type Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import Navbar from "./components/navbar"
 import "./styles/globals.css"
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,23 +21,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-
-    <div>
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ClerkProvider>
           <header className="flex justify-end items-center p-4 gap-4 h-16">
             <Navbar />
           </header>
           {children}
-        </body>
-      </html>
-
-    </div>
-
-
+        </ClerkProvider>
+      </body>
+    </html>
   )
 }
