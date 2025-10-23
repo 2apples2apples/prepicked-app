@@ -1,0 +1,23 @@
+# Docker Compose for PrePicked App
+# Runs both development (hot reload) and production (optimized) environments
+
+services:
+  # 💻 Development service
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+    env_file:
+      - .env
+    command: bun run dev
+    user: root # ✅ Fix for Turbopack write permission errors
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+    ports:
+      - "3000:3000" # local dev on port 3000
+    volumes:
+      - .:/usr/src/app # live-reload source files
+      - /usr/src/app/node_m_
