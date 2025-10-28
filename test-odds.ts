@@ -33,4 +33,22 @@ async function main() {
   }
 }
 
+import "dotenv/config"
+
+async function checkStatus() {
+  const response = await fetch("https://v3.football.api-sports.io/status", {
+    headers: {
+      "x-apisports-key": process.env.SPORTS_API_KEY!,
+    },
+  })
+
+  const data = await response.json()
+  console.log(data)
+}
+
+checkStatus()
 main()
+
+async function scores() {
+
+}
