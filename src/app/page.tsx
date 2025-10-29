@@ -1,8 +1,10 @@
 import {
   SignUpButton,
 } from "@clerk/nextjs"
+import Link from "next/link"
 
 export default function Home() {
+
   return (
     <main className="home">
       {/* Hero / Welcome section */}
@@ -19,7 +21,11 @@ export default function Home() {
           <div className="feature-card">
             <h3>For Dan and Tom</h3>
             <p>Enter current weeks betting slip for fast and easy point calcualtion</p>
-            <button>check picks</button>
+            <Link href={"/picks"}>
+              <button className="px-3 py-1 bg-white/10 hover:bg-white/20 active:bg-white/30 rounded-md text-sm font-mono text-white/80 transition">
+                Check Parlay
+              </button>
+            </Link>
           </div>
         </div>
       </section>
