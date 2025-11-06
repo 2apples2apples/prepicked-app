@@ -10,7 +10,7 @@ export default function Home() {
       {/* Hero / Welcome section */}
       <section className="hero">
         <h1>Welcome to PrePicked</h1>
-        <p>Lock in your season picks for Football, Basketball and Baseball</p>
+        <p>Lock in your dseasssson picks for Football, Basketball and Baseball</p>
         <button>Get Started Now</button>
       </section>
 

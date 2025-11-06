@@ -7,12 +7,10 @@ import {
   UserButton,
 } from "@clerk/nextjs"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import "../styles/navbar.css"
 
 export default function Navbar() {
   const logo = "/assets/prepicked.png"
-  const router = useRouter()
   return (
     <nav>
       <div>
@@ -23,9 +21,6 @@ export default function Navbar() {
           width={120}
           height={60}
         />
-      </div>
-      <div>
-        <button onClick={() => router.push("/page.tsx")}>click me</button>
       </div>
       <div>
         <h1 className="title-text">PrePicked</h1>

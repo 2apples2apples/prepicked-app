@@ -1,33 +1,39 @@
-# Docker Compose for PrePicked App
-# Runs both development (hot reload) and production (optimized) environments
-
-version: "3.9"
+version: "3.8"
 
 services:
-  # 💻 Development service
   dev:
     container_name: prepicked-app
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev
       args:
         NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
     env_file:
       - .env
-    command: bun run dev
-    user: root # ✅ Fix for Turbopack write permission errors
+    entrypoint: ["npm"]
+    command: ["run", "dev"]
+    user: root
+    working_dir: /usr/src/app
     environment:
       NODE_ENV: development
       NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      # 👇 Force file watching on Windows
+      WATCHPACK_POLLING: "true"
+      WATCHPACK_FORCE_POLLING: "true"
+      WATCHPACK_POLLING_INTERVAL: "500"
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: "500"
+      NEXT_TELEMETRY_DISABLED: "1"
+      FORCE_COLOR: "1"
     ports:
-      - "3000:3000" # local dev on port 3000
+      - "3000:3000"
     volumes:
-      - .:/usr/src/app # live-reload source files
-      - /usr/src/app/node_modules
+      - ./:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
     depends_on:
-      - db # 🧩 ensure Postgres starts first
+      - db
 
-  # 🐘 PostgreSQL Database
   db:
     image: postgres:latest
     container_name: prepicked-db
@@ -38,7 +44,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
+  node_modules:

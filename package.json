@@ -7,7 +7,7 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "git:push": "git pull && git add . && git commit -m 'dev' && git push"
+    "git:push": "git pull && git add . && git commit -m \"dev\" && git push"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.33.3",
