@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  dev:
+    container_name: prepicked-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+      args:
+        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+    env_file:
+      - .env
+    entrypoint: ["npm"]
+    command: ["run", "dev"]
+    user: root
+    working_dir: /usr/src/app
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      # 👇 Force file watching on Windows
+      WATCHPACK_POLLING: "true"
+      WATCHPACK_FORCE_POLLING: "true"
+      WATCHPACK_POLLING_INTERVAL: "500"
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: "500"
+      NEXT_TELEMETRY_DISABLED: "1"
+      FORCE_COLOR: "1"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    container_name: prepicked-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: thomas11
+      POSTGRES_DB: prepicked
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+  node_modules:
