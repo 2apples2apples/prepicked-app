@@ -1,12 +1,13 @@
 "use client"
-
-import { NflGameData } from "@/types/interface"
+import { GameSummary, NflGameData } from "@/types/interface"
 import "dotenv/config"
 import { useState } from "react"
+import ProGameCard from "../components/FootballGame"
 
 
 export default function PicksPage() {
   const [ week, setWeek ] = useState("")
+  const [ games, setGames ] = useState<GameSummary[]>([])
   console.log(week)
 
   async function nflScores(selectedWeek: string) {
@@ -14,7 +15,7 @@ export default function PicksPage() {
       const key = process.env.NEXT_PUBLIC_SPORTS_DATA_IO_KEY
       const response = await fetch(`https://api.sportsdata.io/v3/nfl/scores/json/ScoresByWeek/2025REG/${selectedWeek}?key=${key}`)
 
-      const data = await response.json()
+      const data:NflGameData[] = await response.json()
 
       const gameSummaries = data.map((g: NflGameData) => ({
         matchup: `${g.HomeTeam} vs ${g.AwayTeam} `,
@@ -23,6 +24,9 @@ export default function PicksPage() {
         spread: g.PointSpread,
       }))
       console.log(gameSummaries)
+      setGames(gameSummaries)
+
+
     } catch (err) {
       console.log(`Error fetching odds:${err}`)
     }
@@ -53,6 +57,19 @@ export default function PicksPage() {
             Week {i + 1}
           </option>)}
       </select>
+      {week && (
+        <div>
+          <p>Selected week: {week}</p>
+          <div className="p-6">
+            <h1 className="text-xl font-bold mb-4">NFL Week {week} Scores</h1>
+
+            {games.map((g, i) => (
+              <ProGameCard key={i} game={g} />
+            ))}
+          </div>
+        </div>
+      )}
     </main>
+
   )
 }

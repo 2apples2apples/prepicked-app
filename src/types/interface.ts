@@ -20,11 +20,10 @@ export interface NflGameData {
 
 }
 
-
 export interface GameSummary {
   matchup: string;
   score: string;
-  stadium: string;
+  stadium?: string;
   status: string;
   spread: number
 }
