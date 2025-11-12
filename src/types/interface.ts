@@ -17,6 +17,7 @@ export interface NflGameData {
   Status: string;
   PointSpread: number;
   TimeRemaining: string;
+  GameKey?: string;
 
 }
 
@@ -26,4 +27,7 @@ export interface GameSummary {
   stadium?: string;
   status: string;
   spread: number
+  awayTeam?: string;
+  homeTeam?: string;
+  gameKey?: string;
 }

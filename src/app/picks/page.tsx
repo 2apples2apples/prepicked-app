@@ -22,6 +22,9 @@ export default function PicksPage() {
         score: `${g.HomeScore}-${g.AwayScore}`,
         status: g.Status,
         spread: g.PointSpread,
+        homeTeam: g.HomeTeam,
+        awayTeam: g.AwayTeam,
+        gameKey: g.GameKey,
       }))
       console.log(gameSummaries)
       setGames(gameSummaries)
@@ -30,6 +33,10 @@ export default function PicksPage() {
     } catch (err) {
       console.log(`Error fetching odds:${err}`)
     }
+  }
+
+  function handleSubmit() {
+    
   }
 
   return (
@@ -62,10 +69,18 @@ export default function PicksPage() {
           <p>Selected week: {week}</p>
           <div className="p-6">
             <h1 className="text-xl font-bold mb-4">NFL Week {week} Scores</h1>
+            <form>
+              {games.map((g, i) => (
+                <ProGameCard key={i} game={g} />
+              ))}
+              <button
+                type="submit"
+                className="mt-4 px-3 py-2 bg-blue-600 text-white rounded"
+              >
+                Submit All Picks
+              </button>
+            </form>
 
-            {games.map((g, i) => (
-              <ProGameCard key={i} game={g} />
-            ))}
           </div>
         </div>
       )}
