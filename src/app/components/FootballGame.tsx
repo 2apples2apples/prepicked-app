@@ -10,10 +10,10 @@ export default function ProGameCard({ game, displaySpread = true }: { game: Game
         <p className="text-sm">Status: {game.status}</p>
         <p>key {game.gameKey}</p>
         {displaySpread ? (<><label>
-          select: {game.homeTeam} spread {Math.ceil(game.spread)}<input type="radio" name={game.gameKey}></input>
+          select: {game.homeTeam} spread {Math.ceil(game.spread)}<input type="radio" name={game.gameKey} value="home"></input>
         </label>
         <label>
-          select: {game.awayTeam} spread {Math.ceil(game.spread * -1)}<input type="radio" name={game.gameKey}></input>
+          select: {game.awayTeam} spread {Math.ceil(game.spread * -1)}<input type="radio" name={game.gameKey} value="away"></input>
         </label></>) : null}
       </div>
     </div>

@@ -35,16 +35,41 @@ export default function PicksPage() {
     }
   }
 
-  function handleSubmit() {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement> ) {
+    e.preventDefault()
+    const form = e.currentTarget;
+    const formData = new FormData(form)
+    const selectedGames = Object.fromEntries(formData.entries()); 
+
+    const picked = Object.entries(selectedGames).map(([gamekey, choice]) => {
+      const game = games.find(g => g.gameKey === gamekey)
+
+      if (!game) return null
+      return {
+      gamekey,
+      choice,
+      matchup: game.matchup,
+      homeTeam: game.homeTeam,
+      awayTeam: game.awayTeam,
+      spread: game.spread,
+      status: game.status,
+      score: game.score,
+    };
+    }).filter(Boolean)
+    console.log(selectedGames)
     
+
+      console.log("Selected games with full data:", picked);
   }
+
+  
 
   return (
     <main
       style={{
         color: "black",
         height: "100vh",
-        paddingTop: "100px", // 👈 pushes content below navbar
+        paddingTop: "100px",
         zIndex: 10,
         position: "relative",
       }}
@@ -69,7 +94,7 @@ export default function PicksPage() {
           <p>Selected week: {week}</p>
           <div className="p-6">
             <h1 className="text-xl font-bold mb-4">NFL Week {week} Scores</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
               {games.map((g, i) => (
                 <ProGameCard key={i} game={g} />
               ))}
